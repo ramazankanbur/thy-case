@@ -28,6 +28,13 @@ function App() {
     { code: "TK006", id: "s2dd342", size: Sizes.L, status: PlaneStatus.OnGate },
     { code: "TK007", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
     { code: "TK008", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
+    { code: "TK009", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
+    { code: "TK0010", id: "s2dd342", size: Sizes.L, status: PlaneStatus.OnGate },
+    { code: "TK0011", id: "s2342", size: Sizes.L, status: PlaneStatus.OnGate },
+    { code: "TK0012", id: "s2dd342", size: Sizes.L, status: PlaneStatus.OnGate },
+    { code: "TK0013", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
+    { code: "TK0014", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
+    { code: "TK0015", id: "s2342", size: Sizes.L, status: PlaneStatus.OnGate},
   ]);
 
   const [gates, setGates] = useState([]);
