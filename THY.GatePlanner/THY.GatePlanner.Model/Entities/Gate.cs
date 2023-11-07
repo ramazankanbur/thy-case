@@ -2,14 +2,14 @@
 using System.Security.AccessControl;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+using THY.GatePlanner.Model.Enums;
 
 namespace THY.GatePlanner.Model.Entities
 {
 	public class Gate : Base
 	{
 		public string Code { get; set; }
-		public string Size { get; set; }
+		public int Size { get; set; }
 		public string Location { get; set; } //"x:y"
 	}
 
@@ -24,7 +24,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code="GT001",
                      IsDeleted=false,
                       Location="10:9",
-                       Size="S",
+                       Size=SizeEnum.S.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -34,7 +34,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code = "GT002",
                     IsDeleted = false,
                     Location = "5:8",
-                    Size = "S",
+                    Size = SizeEnum.S.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -44,7 +44,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code = "GT003",
                     IsDeleted = false,
                     Location = "12:1",
-                    Size = "S",
+                    Size = SizeEnum.S.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -54,7 +54,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code = "GT004",
                     IsDeleted = false,
                     Location = "8:8",
-                    Size = "M",
+                    Size = SizeEnum.M.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -64,7 +64,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code = "GT005",
                     IsDeleted = false,
                     Location = "11:3",
-                    Size = "M",
+                    Size = SizeEnum.M.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -74,7 +74,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code = "GT006",
                     IsDeleted = false,
                     Location = "3:9",
-                    Size = "M",
+                    Size = SizeEnum.M.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -84,7 +84,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code = "GT007",
                     IsDeleted = false,
                     Location = "7:3",
-                    Size = "L",
+                    Size = SizeEnum.L.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -94,7 +94,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code = "GT008",
                     IsDeleted = false,
                     Location = "10:10",
-                    Size = "L",
+                    Size = SizeEnum.L.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -104,7 +104,7 @@ namespace THY.GatePlanner.Model.Entities
                     Code = "GT009",
                     IsDeleted = false,
                     Location = "10:13",
-                    Size = "L",
+                    Size = SizeEnum.L.GetHashCode(),
                     CreatedBy = 0,
                     CreatedAt = DateTime.Now
                 },
@@ -114,7 +114,7 @@ namespace THY.GatePlanner.Model.Entities
                       Code = "GT010",
                       IsDeleted = false,
                       Location = "6:3",
-                      Size = "L",
+                      Size = SizeEnum.L.GetHashCode(),
                       CreatedBy = 0,
                       CreatedAt = DateTime.Now
                   }

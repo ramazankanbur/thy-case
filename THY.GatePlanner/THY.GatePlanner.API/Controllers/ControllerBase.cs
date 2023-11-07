@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace THY.GatePlanner.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     public class ControllerBase : Controller
     {
        
