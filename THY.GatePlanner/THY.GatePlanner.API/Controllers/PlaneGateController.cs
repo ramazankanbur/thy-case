@@ -7,10 +7,7 @@ namespace THY.GatePlanner.API.Controllers
     public class PlaneGateController : ControllerBase
     {
         public PlaneGateController()
-        {
-                
-        }
-
+        {}
 
     }
 }

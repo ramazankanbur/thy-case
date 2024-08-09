@@ -11,9 +11,9 @@ namespace THY.GatePlanner.API.RabbitMQ
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
-        public RabbitMQService(string hostname)
+        public RabbitMQService(string hostName)
         {
-            var factory = new ConnectionFactory() { HostName = hostname };
+            var factory = new ConnectionFactory() { HostName = hostName };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
         }

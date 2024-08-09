@@ -26,6 +26,8 @@ builder.Services.AddSingleton<IRabbitMqService>(provider =>
     return new RabbitMQService("localhost");
 });
 
+builder.Services.AddHostedService<QueueConsumerService>();
+
 
 builder.AddDataLayer();
 

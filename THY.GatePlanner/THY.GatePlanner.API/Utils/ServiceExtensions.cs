@@ -21,7 +21,6 @@ namespace THY.GatePlanner.API.Utils
             services.AddScoped<IGateService, GateService>();
             services.AddScoped<IPlaneService, PlaneService>();
 
-           
         }
 
         public static void AddDataLayer(this WebApplicationBuilder builder)

@@ -36,7 +36,6 @@ function App() {
   ]);
 
 
-
   const fetchData = async () => {
     const result = await axiosClient.get("/api/gate");
     setGates(result.data);
@@ -45,19 +44,19 @@ function App() {
   useEffect(() => {
     createHubConnection().then(res => { setHubConnection(res) });
     fetchData();
-
   }, []);
 
   useEffect(() => {
     if (hubConnection) {
       hubConnection.on("PlaneQueued", (message) => {
-        
-        console.log(message);
-      })
+        console.log("queued",message);
+      });
+
+      hubConnection.on("PlaneAssigned", (message) => {
+        console.log("assigned",message);
+      });
     }
-
   }, [hubConnection])
-
 
   const onShowHideChangeHandler = () => {
     console.log(showHideValue);
@@ -77,8 +76,6 @@ function App() {
         { code: "TK005", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
         { code: "TK006", id: "s2dd342", size: Sizes.L, status: PlaneStatus.OnGate },
         { code: "TK007", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
-
-
       ]);
     }
   }
