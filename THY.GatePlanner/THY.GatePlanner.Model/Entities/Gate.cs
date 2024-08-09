@@ -11,7 +11,10 @@ namespace THY.GatePlanner.Model.Entities
 		public string Code { get; set; }
 		public int Size { get; set; }
 		public string Location { get; set; } //"x:y"
-	}
+
+
+        public ICollection<PlaneGate> PlaneGates { get; set; }
+    }
 
     public class GateEntityConfiguration : IEntityTypeConfiguration<Gate>
     {

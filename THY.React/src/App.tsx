@@ -1,22 +1,20 @@
 import { useState, useEffect } from "react";
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 
-import * as signalR from "@microsoft/signalr";
-import { HUB_CONNECTION } from "./utils/config";
+
+import { createHubConnection } from "./utils/hub";
 import PlaneList from "./components/PlaneList";
 import GateList from "./components/GateList";
 import Action from "./components/Action";
-import { Plane } from "./models/Model";
 
 import axiosClient from "./utils/axiosClient";
-import { GateStatus, PlaneStatus, Sizes } from "./models/Enum";
+import { PlaneStatus, Sizes } from "./models/Enum";
 import "./App.css";
-
+import { HubConnection } from "@microsoft/signalr";
 
 function App() {
 
   const [hubConnection, setHubConnection] = useState<HubConnection>();
-
+  const [gates, setGates] = useState([]);
 
   const [showHideValue, setShowHideValue] = useState(false);
   const [planes, setPlanes] = useState([
@@ -34,44 +32,32 @@ function App() {
     { code: "TK0012", id: "s2dd342", size: Sizes.L, status: PlaneStatus.OnGate },
     { code: "TK0013", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
     { code: "TK0014", id: "s2342", size: Sizes.L, status: PlaneStatus.Ground },
-    { code: "TK0015", id: "s2342", size: Sizes.L, status: PlaneStatus.OnGate},
+    { code: "TK0015", id: "s2342", size: Sizes.L, status: PlaneStatus.OnGate },
   ]);
 
-  const [gates, setGates] = useState([]);
 
 
   const fetchData = async () => {
     const result = await axiosClient.get("/api/gate");
-    console.log(result.data)
     setGates(result.data);
   }
 
   useEffect(() => {
-    createHubConnection();
+    createHubConnection().then(res => { setHubConnection(res) });
     fetchData();
 
   }, []);
 
   useEffect(() => {
     if (hubConnection) {
-      hubConnection.on("ReceiveMessage", (message) => {
+      hubConnection.on("PlaneQueued", (message) => {
+        
         console.log(message);
       })
     }
 
   }, [hubConnection])
 
-
-  const createHubConnection = async () => {
-    const hubConnection = new HubConnectionBuilder().withUrl(HUB_CONNECTION, { skipNegotiation: true, transport: signalR.HttpTransportType.WebSockets }).build();
-    try {
-      await hubConnection.start();
-      console.log("connected");
-      setHubConnection(hubConnection);
-    } catch (error) {
-      console.log("hata", error);
-    }
-  }
 
   const onShowHideChangeHandler = () => {
     console.log(showHideValue);

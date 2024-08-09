@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axiosClient from "../utils/axiosClient";
 
 interface Props {
 
@@ -8,14 +9,18 @@ const Action = (props: Props) => {
     const [isNumberValid, setNumberValid] = useState(true);
     const [inputValue, setInputValue] = useState(15);
 
-    const onStartButtonClickHandler = () => {
-        console.log("ilk yer", inputValue)
+    const onStartButtonClickHandler =  async () => {
         if (inputValue < 11) {
-            console.log(inputValue)
             setNumberValid(false);
+
         } else {
             setNumberValid(true);
-            console.log(inputValue);
+            var data = {
+                code: 'TK12515',
+                size: 2
+            }
+            setInterval(await axiosClient.post("/api/plane", data ), 1500);
+            
         }
     }
 
@@ -32,7 +37,7 @@ const Action = (props: Props) => {
                 </div>
             </div>
             <div className="input-group mb-3" >
-                <button className="btn btn-outline-secondary" type="button" onClick={onStartButtonClickHandler}>Başlat</button>
+                <button className="btn btn-outline-secondary" type="button" onClick={async() => await onStartButtonClickHandler()}>Başlat</button>
                 <input type="number" className="form-control" aria-label="Example text with button addon" aria-describedby="button-addon1" value={inputValue} onChange={(e) => setInputValue(parseInt(e.target.value))} />
             </div>
             {

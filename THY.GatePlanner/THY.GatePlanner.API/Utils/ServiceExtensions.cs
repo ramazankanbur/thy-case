@@ -6,6 +6,7 @@ using THY.GatePlanner.Infrastructure.Persistence.UOW;
 using THY.GatePlanner.Service.GateService;
 using Microsoft.EntityFrameworkCore;
 using THY.GatePlanner.API.RabbitMQ;
+using THY.GatePlanner.Service.PlaneService;
 
 namespace THY.GatePlanner.API.Utils
 {
@@ -18,8 +19,9 @@ namespace THY.GatePlanner.API.Utils
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IGateService, GateService>();
+            services.AddScoped<IPlaneService, PlaneService>();
 
-            services.AddScoped<IMessageProducer, RabbitMQProducer>();
+           
         }
 
         public static void AddDataLayer(this WebApplicationBuilder builder)

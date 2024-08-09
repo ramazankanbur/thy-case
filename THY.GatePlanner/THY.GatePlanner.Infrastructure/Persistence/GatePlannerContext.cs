@@ -15,9 +15,13 @@ public sealed class GatePlannerContext : DbContext
     }
 
     public DbSet<Gate> Gates { get; set; } = null!;
+    public DbSet<Plane> Planes { get; set; } = null!;
+    public DbSet<PlaneGate> PlaneGates { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new GateEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new PlaneEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new PlaneGateEntityConfiguration());
     }
 }

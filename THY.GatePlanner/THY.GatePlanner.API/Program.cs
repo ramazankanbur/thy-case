@@ -1,4 +1,6 @@
-﻿using THY.GatePlanner.API.Hubs;
+﻿using THY.GatePlanner.API;
+using THY.GatePlanner.API.Hubs;
+using THY.GatePlanner.API.RabbitMQ;
 using THY.GatePlanner.API.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAppServices();
 
+builder.Services.AddSingleton<IRabbitMqService>(provider =>
+{
+    return new RabbitMQService("localhost");
+});
 
 
 builder.AddDataLayer();
