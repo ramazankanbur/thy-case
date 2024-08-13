@@ -9,6 +9,8 @@ public class Repository<T> : IRepository<T> where T : Base
     private readonly DbContext _dbContext;
     private readonly DbSet<T> _dbSet;
 
+    private bool _disposed = false;
+
     public Repository(DbContext dbContext)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -36,10 +38,13 @@ public class Repository<T> : IRepository<T> where T : Base
         return _dbSet.Where(predicate);
     }
 
-    public T? GetByIdAsync(int id)
+    public async Task<T?> GetByIdAsync(Guid id)
     {
-        return   _dbSet.Find(id);
+        return   await _dbSet.FindAsync(id);
     }
+
+    
+
 
     public void Update(T entity)
     {
@@ -47,8 +52,22 @@ public class Repository<T> : IRepository<T> where T : Base
         _dbContext.Entry(entity).State = EntityState.Modified;
     }
 
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _dbContext.Dispose();
+            }
+            _disposed = true;
+        }
+    }
+
     public void Dispose()
     {
-        _dbContext.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
+
 }

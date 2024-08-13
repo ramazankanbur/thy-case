@@ -21,7 +21,7 @@ namespace THY.GatePlanner.API.Controllers
         }
 
         [HttpGet("Gate")]
-        public async Task<ActionResult<GetGatesResponse>> GetPagedResources([FromQuery] GetGatesRequest getGatesRequest)
+        public async Task<ActionResult<GetGatesResponse>> GetGates([FromQuery] GetGatesRequest getGatesRequest)
         {
             var serviceResult = await _gateService.GetGatesAsync(getGatesRequest);
 
@@ -29,6 +29,8 @@ namespace THY.GatePlanner.API.Controllers
 
             return StatusCode((int)HttpStatusCode.OK, response);
         }
+
+  
     }
 }
 

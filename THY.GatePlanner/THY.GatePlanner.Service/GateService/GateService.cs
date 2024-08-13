@@ -17,7 +17,9 @@ namespace THY.GatePlanner.Service.GateService
             _unitOfWork = unitOfWork;
         }
 
-        async Task<List<GetGatesResponse>> IGateService.GetGatesAsync(GetGatesRequest? request)
+      
+        //[TODO] filter by code if code exists
+        public async Task<List<GetGatesResponse>> GetGatesAsync(GetGatesRequest? request)
         {
             try
             {
@@ -27,7 +29,27 @@ namespace THY.GatePlanner.Service.GateService
 
                 response = await gateRepository
                     .GetAll()
-                    .Select(x => new GetGatesResponse() { code = x.Code, location = x.Location, size = (SizeEnum)x.Size, id = x.Id.ToString() })
+                    .Select(x => new GetGatesResponse() { Code = x.Code, Location = x.Location, Size = (SizeEnum)x.Size, Id = x.Id , GateStatus = x.GateStatus}).ToListAsync();
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            } 
+        }
+
+        public async Task<List<GetAvailableGatesBySizeResponse>> GetAvailableGatesBySizeAsync(GetAvailableGatesBySizeRequest request)
+        {
+            try
+            {
+                var response = new List<GetAvailableGatesBySizeResponse>();
+
+                var gateRepository = _unitOfWork.GetRepository<Gate>();
+
+                response = await gateRepository
+                    .GetAll(x => x.GateStatus == GateStatus.Available.GetHashCode() && x.Size == request.Size)
+                    .Select(x => new GetAvailableGatesBySizeResponse() { Code = x.Code, Location = x.Location, Id = x.Id })
                     .ToListAsync();
 
                 return response;
@@ -36,8 +58,28 @@ namespace THY.GatePlanner.Service.GateService
             {
                 throw;
             }
-           
         }
+
+        public async Task<IsThereAvailableGateResponse> IsThereAvailableGateAsync()
+        {
+            try
+            {
+                var response = new IsThereAvailableGateResponse();
+
+                var gateRepository = _unitOfWork.GetRepository<Gate>();
+
+                response.IsThereAvailableGate = await gateRepository.GetAll(x => x.GateStatus == GateStatus.Available.GetHashCode()).AnyAsync();
+                    
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
+
     }
 }
 

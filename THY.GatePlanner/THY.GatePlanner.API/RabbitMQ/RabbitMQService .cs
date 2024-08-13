@@ -35,9 +35,38 @@ namespace THY.GatePlanner.API.RabbitMQ
             Console.WriteLine(" [x] Sent {0} to queue {1}", message, queueName);
         }
 
+        public string BasicGet(string queueName, out ulong deliveryTag)
+        { 
+           var result = _channel.BasicGet(queue: queueName, autoAck: false);
+ 
+            if (result == null)
+            {
+
+                Console.WriteLine(" [x] No message received.");
+                deliveryTag = 0;
+                return null;
+            }
+
+            var body = result.Body.ToArray();
+            var message = Encoding.UTF8.GetString(body);
+
+            deliveryTag = result.DeliveryTag;
+
+            return message;
+        }
+        public void Acknowledge(ulong deliveryTag)
+        {
+            _channel.BasicAck(deliveryTag: deliveryTag, multiple: false);
+        }
+
+        public void Reject(ulong deliveryTag, bool requeue = true)
+        {
+            _channel.BasicNack(deliveryTag: deliveryTag, multiple: false, requeue: requeue);
+        }
+
+
         public void StartConsuming(string queueName, Action<string> onMessageReceived)
         {
-            // Kuyruğu burada da tanımlıyoruz, böylece dinamik olarak kullanılabilir
             _channel.QueueDeclare(queue: queueName,
                                   durable: false,
                                   exclusive: false,

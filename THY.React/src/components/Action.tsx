@@ -10,18 +10,28 @@ const Action = (props: Props) => {
     const [inputValue, setInputValue] = useState(15);
 
     const onStartButtonClickHandler = async () => {
-        if (inputValue < 11) {
-            setNumberValid(false);
 
-        } else {
-            setNumberValid(true);
-            for (let index = 0; index < inputValue; index++) {
-                await delay(1000);
-                const code = createRandomPlane(75);
-                const size = Math.floor(Math.random() * 3);
-                await axiosClient.post("/api/plane", { code, size });
-            }
+
+        setNumberValid(true);
+        for (let index = 0; index < inputValue; index++) {
+            await delay(1000);
+            const code = createRandomPlane(75);
+            const size = Math.floor(Math.random() * 3);
+            await axiosClient.post("/api/plane", { code, size });
         }
+
+        // if (inputValue < 11) {
+        //     setNumberValid(false);
+
+        // } else {
+        //     setNumberValid(true);
+        //     for (let index = 0; index < inputValue; index++) {
+        //         await delay(1000);
+        //         const code = createRandomPlane(75);
+        //         const size = Math.floor(Math.random() * 3);
+        //         await axiosClient.post("/api/plane", { code, size });
+        //     }
+        // }
     }
 
     const onClearButtonClickHandler = () => {

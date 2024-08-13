@@ -11,6 +11,7 @@ namespace THY.GatePlanner.Model.Entities
 		public string Code { get; set; }
 		public int Size { get; set; }
 		public string Location { get; set; } //"x:y"
+        public int GateStatus { get; set; }
 
 
         public ICollection<PlaneGate> PlaneGates { get; set; }

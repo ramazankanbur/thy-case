@@ -37,7 +37,7 @@ function App() {
 
 
   const fetchData = async () => {
-    const result = await axiosClient.get("/api/gate");
+    const result = await axiosClient.get("/api/PlaneGate");
     setGates(result.data);
   }
 

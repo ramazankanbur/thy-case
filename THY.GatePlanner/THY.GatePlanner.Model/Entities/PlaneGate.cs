@@ -16,7 +16,7 @@ namespace THY.GatePlanner.Model.Entities
         public Plane Plane { get; set; }
         public Guid GateId { get; set; }
         public Gate Gate { get; set; }
-        public TimeSpan PassengerOffboardingDuration { get; set; }
+        public int PassengerOffboardingDuration { get; set; }
 
     }
 
@@ -24,7 +24,6 @@ namespace THY.GatePlanner.Model.Entities
     {
         public void Configure(EntityTypeBuilder<PlaneGate> entity)
         {
-            entity.HasKey(pg => new { pg.PlaneId, pg.GateId });
 
             entity
                  .HasOne(pg => pg.Plane)

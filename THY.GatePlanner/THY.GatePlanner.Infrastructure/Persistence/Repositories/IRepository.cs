@@ -7,7 +7,7 @@ namespace THY.GatePlanner.Infrastructure.Persistence.Repositories
     {
         IQueryable<T> GetAll();
         IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
-        T? GetByIdAsync(int id);
+        Task<T?> GetByIdAsync(Guid id);
         void Add(T entity);
         void Update(T entity);
         void Delete(Expression<Func<T, bool>> predicate);

@@ -8,11 +8,11 @@ interface Plane {
 }
 
 interface Gate {
-  status: GateStatus,
+  gateStatus: number,
   id: string,
   code: string,
   size: Sizes,
-  location: string
+  location: string, 
 }
 
 interface PlaneGate {
@@ -20,4 +20,13 @@ interface PlaneGate {
   GateId: string
 }
 
-export type { Plane, Gate, PlaneGate };
+interface GatePlaneResult {
+  GateCode: string,
+  GateId: string,
+  GateSize: number,
+  GateLocation: string,
+  GateStatus: number,
+  PassengerOffboardinnDuration: number
+}
+
+export type { Plane, Gate, PlaneGate, GatePlaneResult };

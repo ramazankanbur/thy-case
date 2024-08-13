@@ -7,6 +7,8 @@ namespace THY.GatePlanner.Service.GateService
 	public interface IGateService
 	{
 		Task<List<GetGatesResponse>> GetGatesAsync(GetGatesRequest? request);
-	}
+        Task<IsThereAvailableGateResponse> IsThereAvailableGateAsync();
+        Task<List<GetAvailableGatesBySizeResponse>> GetAvailableGatesBySizeAsync(GetAvailableGatesBySizeRequest request);
+    }
 }
 

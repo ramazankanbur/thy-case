@@ -7,6 +7,7 @@ using THY.GatePlanner.Service.GateService;
 using Microsoft.EntityFrameworkCore;
 using THY.GatePlanner.API.RabbitMQ;
 using THY.GatePlanner.Service.PlaneService;
+using THY.GatePlanner.Service.PlaneGateService;
 
 namespace THY.GatePlanner.API.Utils
 {
@@ -20,6 +21,7 @@ namespace THY.GatePlanner.API.Utils
 
             services.AddScoped<IGateService, GateService>();
             services.AddScoped<IPlaneService, PlaneService>();
+            services.AddScoped<IPlaneGateService, PlaneGateService>();
 
         }
 
