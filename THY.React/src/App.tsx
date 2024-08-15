@@ -7,7 +7,7 @@ import GateList from "./components/GateList";
 import Action from "./components/Action";
 
 import axiosClient from "./utils/axiosClient";
-import { GateStatus, PlaneStatus, Sizes } from "./models/Enum";
+import { GateStatus, PlaneStatus } from "./models/Enum";
 import "./App.css";
 import { HubConnection } from "@microsoft/signalr";
 import { Plane, PlaneGateApiResult, PlaneGateMessageResult } from "./models/Model";
@@ -47,7 +47,7 @@ function App() {
         console.log("message", message);
         setGates(prevData =>
           prevData.map(gate => (
-            gate.gateId == message.gateId ? { ...gate, gateStatus: GateStatus.InUse } : gate
+            gate.gateId == message.gateId ? { ...gate, gateStatus: GateStatus.InUse, passengerOffboardingDuration: message.passengerOffboardingDuration } : gate
           ))
         );
 

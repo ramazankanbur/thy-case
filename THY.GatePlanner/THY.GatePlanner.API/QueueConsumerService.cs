@@ -60,7 +60,7 @@ namespace THY.GatePlanner.API
                             _rabbitMQService.Acknowledge(outDeliveryTag);
                             if (assignResult.PlaneId != default)
                             {
-                                await _hubContext.Clients.All.SendAsync("PlaneAssigned", new { gateId = assignResult.GateId, planeId = assignResult.PlaneId }); 
+                                await _hubContext.Clients.All.SendAsync("PlaneAssigned", new { gateId = assignResult.GateId, planeId = assignResult.PlaneId, passengerOffboardingDuration = assignResult.PassengerOffboardingDuration }); 
                             } 
                             else 
                                 _rabbitMQService.SendMessage("plane", JsonSerializer.Serialize(new { Id=planeId,Code= planeCode }));

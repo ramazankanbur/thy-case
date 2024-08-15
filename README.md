@@ -1,6 +1,9 @@
 # thy-case
 
-`Türkçe'si altta`
+<details>
+    <summary>Directives</summary>
+
+     `Türkçe'si altta`
  
 Airports need gate assignment systems that direct planes to gates. These systems choose the best gate based on the plane's size and the distance to the gate. Timing between landings and takeoffs is very important at airports. Also, with these systems, planes can be unloaded faster and easier, making passengers' travel more comfortable.
 
@@ -121,3 +124,14 @@ iv. **Ground:** Uygun kapı bulunmadığı için sırada bekleyen uçak.
 5. Minimumda 20 adet gelen uçak verisi bulunmalıdır.
 + Gelen uçak verisi mevcut kapı sayısından her zaman fazla olmalıdır.
 6. Kapıların bir ekran üzerinden düzenlenebilmesi ve dinamik olarak yönetilebilmesi değerlendirme sürecinde artı değer sağlayacaktır.
+</details>
+
+
+<details>
+    <summary>Solution</summary>
+
+    Details will be provided soon
+    
+![image description](solution-items/solution.gif)
+
+</details>
