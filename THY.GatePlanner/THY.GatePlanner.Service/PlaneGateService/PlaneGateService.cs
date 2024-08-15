@@ -34,7 +34,7 @@ namespace THY.GatePlanner.Service.PlaneGateService
 
                 var planeToAssign = await planeRepository.GetByIdAsync(request.PlaneId);
 
-                if(planeToAssign == default)
+                if (planeToAssign == default)
                     return response;
 
                 var availableGatesToAssign = await _gateService.GetAvailableGatesBySizeAsync(new GetAvailableGatesBySizeRequest() { Size = planeToAssign!.Size });
@@ -45,11 +45,14 @@ namespace THY.GatePlanner.Service.PlaneGateService
 
                     var nearestGate = gateRepository.GetAll(x => x.Code == nearestGateCode).FirstOrDefault();
 
+                    var randomPassengerOffboardingDuration = GetRandomPassengerOffboardingDuration();
+                    Console.WriteLine(randomPassengerOffboardingDuration);
+                        
                     planeGateRepository.Add(new PlaneGate()
                     {
                         GateId = nearestGate!.Id,
                         PlaneId = request.PlaneId,
-                        PassengerOffboardingDuration =15,
+                        PassengerOffboardingDuration = randomPassengerOffboardingDuration,
 
                     });
 
@@ -60,9 +63,9 @@ namespace THY.GatePlanner.Service.PlaneGateService
                     gateRepository.Update(nearestGate);
 
 
-
                     response.PlaneId = request.PlaneId;
                     response.GateId = nearestGate.Id;
+                    response.PassengerOffboardingDuration = randomPassengerOffboardingDuration;
 
                     await _unitOfWork.SaveChangesAsync();
                 }
@@ -86,12 +89,21 @@ namespace THY.GatePlanner.Service.PlaneGateService
             {
                 var response = new List<GetPlaneGatesResponse>();
 
+                var gateRepository = _unitOfWork.GetRepository<Gate>();
                 var planeGateRepository = _unitOfWork.GetRepository<PlaneGate>();
 
-                response = await planeGateRepository
+                response = await gateRepository
                     .GetAll()
-                    .Select(x => new GetPlaneGatesResponse() { GateCode = x.Gate.Code, GateId = x.GateId, GateLocation = x.Gate.Location, GateSize = x.Gate.Size, GateStatus = x.Gate.GateStatus , PassengerOffboardingDuration = x.PassengerOffboardingDuration})
+                    .Select(x => new GetPlaneGatesResponse() { GateCode = x.Code, GateId = x.Id, GateLocation = x.Location, GateSize = x.Size, GateStatus = x.GateStatus })
                     .ToListAsync();
+
+                var planeGates = await planeGateRepository.GetAll(x => response.Select(r => r.GateId).ToList().Contains(x.GateId)).ToListAsync();
+
+                foreach (var planeGate in planeGates)
+                {
+                    var gateToAddPassengerOffboardDuration = response.FirstOrDefault(x => x.GateId == planeGate.GateId);
+                    gateToAddPassengerOffboardDuration.PassengerOffboardingDuration = planeGate.PassengerOffboardingDuration;
+                }
 
                 return response;
             }
@@ -121,6 +133,13 @@ namespace THY.GatePlanner.Service.PlaneGateService
             }
 
             return nearestCode;
+        }
+
+        private int GetRandomPassengerOffboardingDuration()
+        {
+            var random = new Random();
+
+            return random.Next(5, 15);
         }
     }
 }

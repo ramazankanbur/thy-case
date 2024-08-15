@@ -22,7 +22,7 @@ namespace THY.GatePlanner.API.RabbitMQ
         {
             // Kuyruğu burada tanımlıyoruz, böylece dinamik olarak kullanılabilir
             _channel.QueueDeclare(queue: queueName,
-                                  durable: false,
+                                  durable: true,
                                   exclusive: false,
                                   autoDelete: false,
                                   arguments: null);
@@ -36,8 +36,16 @@ namespace THY.GatePlanner.API.RabbitMQ
         }
 
         public string BasicGet(string queueName, out ulong deliveryTag)
-        { 
-           var result = _channel.BasicGet(queue: queueName, autoAck: false);
+        {
+
+            _channel.QueueDeclare(
+              queue: queueName,
+              durable: true,
+              exclusive: false,
+              autoDelete: false,
+              arguments: null);
+
+            var result = _channel.BasicGet(queue: queueName, autoAck: false);
  
             if (result == null)
             {

@@ -4,6 +4,7 @@ namespace THY.GatePlanner.Model.Enums
     public enum PlaneStatus
     {
         OnGate,
-        Ground
+        Ground,
+        Completed
     }
 }

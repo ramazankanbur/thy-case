@@ -11,7 +11,8 @@ enum GateStatus {
 
 enum PlaneStatus {
    OnGate,
-   Ground
+   Ground,
+   Completed
 };
 
 export { Sizes, GateStatus, PlaneStatus };

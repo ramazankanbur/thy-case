@@ -17,7 +17,7 @@ namespace THY.GatePlanner.Model.Entities
         public Guid GateId { get; set; }
         public Gate Gate { get; set; }
         public int PassengerOffboardingDuration { get; set; }
-
+        public bool IsCompleted { get; set; }
     }
 
     public class PlaneGateEntityConfiguration : IEntityTypeConfiguration<PlaneGate>

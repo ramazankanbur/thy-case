@@ -12,21 +12,24 @@ interface Gate {
   id: string,
   code: string,
   size: Sizes,
-  location: string, 
+  location: string
 }
 
-interface PlaneGate {
-  PlaneId: string,
-  GateId: string
+interface PlaneGateMessageResult {
+  planeId: string,
+  gateId: string,
+  passengerOffboardingDuration: number,
+  planeStatus: PlaneStatus,
+  gateStatus: GateStatus
 }
 
-interface GatePlaneResult {
-  GateCode: string,
-  GateId: string,
-  GateSize: number,
-  GateLocation: string,
-  GateStatus: number,
-  PassengerOffboardinnDuration: number
+interface PlaneGateApiResult {
+  gateCode: string,
+  gateId: string,
+  gateSize: number,
+  gateLocation: string,
+  gateStatus: number,
+  passengerOffboardingDuration: number
 }
 
-export type { Plane, Gate, PlaneGate, GatePlaneResult };
+export type { Plane, Gate, PlaneGateMessageResult, PlaneGateApiResult };

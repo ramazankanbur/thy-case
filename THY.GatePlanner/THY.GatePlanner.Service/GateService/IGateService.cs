@@ -9,6 +9,9 @@ namespace THY.GatePlanner.Service.GateService
 		Task<List<GetGatesResponse>> GetGatesAsync(GetGatesRequest? request);
         Task<IsThereAvailableGateResponse> IsThereAvailableGateAsync();
         Task<List<GetAvailableGatesBySizeResponse>> GetAvailableGatesBySizeAsync(GetAvailableGatesBySizeRequest request);
+        Task<MakeGateAvailableResponse> MakeGateAvailableAsync(MakeGateAvailableRequest request);
+
+
     }
 }
 

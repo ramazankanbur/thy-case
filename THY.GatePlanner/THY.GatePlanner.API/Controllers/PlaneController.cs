@@ -42,9 +42,12 @@ namespace THY.GatePlanner.API.Controllers
         {
             var serviceResult = await _planeService.CreatePlaneAsync(createPlaneRequest);
 
-            _rabbitMq.SendMessage("plane", JsonSerializer.Serialize(new { serviceResult.Id, createPlaneRequest.Code }));
+            if(createPlaneRequest.Code.StartsWith("TK"))
+            {
+                _rabbitMq.SendMessage("plane", JsonSerializer.Serialize(new { serviceResult.Id, createPlaneRequest.Code }));
 
-            await _hub.Clients.All.SendAsync("PlaneQueued", new { code = createPlaneRequest.Code, size = createPlaneRequest.Size });
+                await _hub.Clients.All.SendAsync("PlaneQueued", new { code = createPlaneRequest.Code, size = createPlaneRequest.Size, id = serviceResult.Id });
+            }
 
             return StatusCode((int)HttpStatusCode.OK, serviceResult);
         }
