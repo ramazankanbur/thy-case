@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "TopSecret_90/*-"
+    networks:
+      - my_network
+
+  rabbitmq2:
+    image: rabbitmq:3-management
+    container_name: rabbitmq1
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    networks:
+      - my_network
+
+  webapi:
+    container_name : "webapi"
+    build:
+      context: ./THY.GatePlanner  
+      dockerfile: ./THY.GatePlanner.API/Dockerfile 
+    ports:
+      - "5000:80"
+    environment:
+      ConnectionStrings__MSSqlConnection: "Server=mssql;database=GatePlanner;User Id=SA;Password=TopSecret_90/*-;TrustServerCertificate=True;MultipleActiveResultSets=True;"
+      RabbitMQ__Host: "rabbitmq"
+      RabbitMQ__Username: "guest"
+      RabbitMQ__Password: "guest"
+      RabbitMQ__Port: 5672
+    networks:
+      - my_network
+    depends_on:
+      rabbitmq2:
+        condition: service_healthy
+      mssql:
+        condition: service_started
+
+  react-app:
+    build:
+      context: ./THY.React
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" 
+    networks:
+      - my_network
+    depends_on:
+      webapi:
+        condition: service_started
+
+networks:
+  my_network:

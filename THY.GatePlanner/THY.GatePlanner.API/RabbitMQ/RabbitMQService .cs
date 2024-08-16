@@ -11,16 +11,17 @@ namespace THY.GatePlanner.API.RabbitMQ
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
-        public RabbitMQService(string hostName)
+        public RabbitMQService(string hostname = "localhost", string username = "guest", string password = "guest", int port = 5672)
         {
-            var factory = new ConnectionFactory() { HostName = hostName };
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
-        }
+                var factory = new ConnectionFactory() {HostName = hostname, UserName= username, Password = password, Port= 5672 };
+
+                _connection = factory.CreateConnection();
+                _channel = _connection.CreateModel();
+           
+         }
 
         public void SendMessage(string queueName, string message)
         {
-            // Kuyruğu burada tanımlıyoruz, böylece dinamik olarak kullanılabilir
             _channel.QueueDeclare(queue: queueName,
                                   durable: true,
                                   exclusive: false,
