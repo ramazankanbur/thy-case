@@ -135,3 +135,10 @@ iv. **Ground:** Uygun kapı bulunmadığı için sırada bekleyen uçak.
 ![image description](solution-items/solution.gif)
 
 </details>
+
+
+Gelistirme ortami icin ->
+
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=TopSecret_90/*-" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+
+docker run -d --name rabbitmq1 --hostname rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
